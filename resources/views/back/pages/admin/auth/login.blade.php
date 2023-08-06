@@ -1,11 +1,12 @@
 @extends('back.layout.auth-layout')
-@section('pageTitle',isset($pageTitle) ? $pageTitle : 'Page title here')
+@section('pageTitle',isset($pageTitle) ? $pageTitle : 'Admin Login')
 @section('content')
 <div class="login-box bg-white box-shadow border-radius-10">
 <div class="login-title">
 	<h2 class="text-center text-primary">Admin Login</h2>
 </div>
-<form action="{{ route('adminlogin_handler') }}" method="POST">
+<form action="{{ route('AdminController@loginHandler') }}" method="post">
+
     @csrf
 
     @if (Session::get('fail'))
@@ -30,7 +31,7 @@
     </div>
     @enderror
 	<div class="input-group custom">
-		<input type="password" class="form-control form-control-lg" placeholder="**********">
+		<input type="password" class="form-control form-control-lg" placeholder="**********" name="password">
 		<div class="input-group-append custom">
 			<span class="input-group-text"><i class="dw dw-padlock1"></i></span>
 		</div>

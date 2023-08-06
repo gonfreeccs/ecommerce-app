@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     public function loginHandler(Request $request){
-        $fieldtype = filter_var($request->login_id,FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        if($fieldtype == 'email'){
+        $fieldType = filter_var($request->login_id, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+
+        if($fieldType == 'email'){
             $request->validate([
                 'login_id'=>'required|email|exists:admins,email',
                 'password'=>'required|min:5|max:45'
@@ -21,7 +23,7 @@ class AdminController extends Controller
             ]);
         }else{
             $request->validate([
-                'login_id'=>'required|exists:admins,email',
+                'login_id'=>'required|exists:admins,username',
                 'password'=>'required|min:5|max:45'
             ],[
                 'login_id.required'=>'Email or Username is required',
@@ -29,6 +31,16 @@ class AdminController extends Controller
                 'password.required'=>'Password is required'
             ]);
 
+        }
+        $creds = array(
+            $fieldType => $request->login_id,
+            'password' =>$request->password
+        );
+        if (Auth::guard('admin')->attempt($creds)) {
+            return redirect()->route('admin.home');
+        }else{
+            session()->flash('fail','Incorrect credentials');
+            return redirect()->route('admin.login');
         }
     }
 }

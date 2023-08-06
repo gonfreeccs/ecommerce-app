@@ -12,6 +12,7 @@ Route::prefix('admin')->name('admin')->group(function(){
 
     Route::middleware(['auth:admin'])->group(function(){
         Route::view('/home','back.pages.admin.home')->name('home');
+
     });
 
 
