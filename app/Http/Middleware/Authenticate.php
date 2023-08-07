@@ -16,7 +16,10 @@ class Authenticate extends Middleware
             if(!$request->expectsJson()){
                 if ($request->routeIs('admin.*')) {
                     session()->flash('fail','You must login first');
-                    return route('admin.login');
+                    return route('adminlogin');
+                }else{
+                    return route('adminlogin');
+
                 }
             }
     }
