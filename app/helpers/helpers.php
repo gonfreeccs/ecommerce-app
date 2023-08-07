@@ -10,7 +10,7 @@ if(!function_exists('sendEmail')){
 
         $mail = new PHPMailer(true);
         $mail->SMTPDebug = 0;
-        $mail->isSMTp();
+        $mail->isSMTP();
         $mail->Host = env('EMAIL_HOST');
         $mail->SMTPAuth = true;    
         $mail->Username = env('EMAIL_USERNAME');
@@ -18,7 +18,7 @@ if(!function_exists('sendEmail')){
         $mail->SMTPSecure = env('EMAIL_ENCRYPTION');
         $mail->Port = env('EMAIL_PORT');
         $mail->setFrom($mailConfig['mail_from_email'],$mailConfig['mail_from_name']);
-        $mail->addAddress($mailConfig['mail_from_recipient'],$mailConfig['mail_recipient_name']);
+        $mail->addAddress($mailConfig['mail_recipient_email'],$mailConfig['mail_recipient_email']);
         $mail->isHTML(true);
         $mail->Subject = $mailConfig['mail_subject'];
         $mail->Body = $mailConfig['mail_body'];

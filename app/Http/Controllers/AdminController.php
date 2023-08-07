@@ -101,8 +101,8 @@ class AdminController extends Controller
         $mail_body = view('email-templates.admin-forgot-email-template',$data)->render();
 
         $mailConfig = array(
-            'mail_from_email'=>'EMAIL_FROM_ADDRESS',
-            'mail_from_name'=>'EMAIL_FROM_NAME',
+            'mail_from_email'=>env('EMAIL_FROM_ADDRESS'),
+            'mail_from_name'=>env('EMAIL_FROM_NAME'),
             'mail_recipient_email'=>$admin->email,
             'mail_recipient_name'=>$admin->name,
             'mail_subject'=>'Reset Password',
