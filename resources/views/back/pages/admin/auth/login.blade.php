@@ -5,7 +5,7 @@
 <div class="login-title">
 	<h2 class="text-center text-primary">Admin Login</h2>
 </div>
-<form action="{{ route('AdminController@loginHandler') }}" method="post">
+<form action="{{ route('adminlogin_handler') }}" method="post">
 
     @csrf
 
