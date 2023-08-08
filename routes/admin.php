@@ -11,6 +11,7 @@ Route::prefix('admin')->name('admin')->group(function(){
         Route::view('/forgot-password','back.pages.admin.auth.forgot-password')->name('forgot-password');
         Route::post('/send-password-reset-link',[AdminController::class,'sendPasswordResetLink'])->name('send-password-reset-link');
         Route::get('/password/reset/{token}',[AdminController::class,'resetPassword'])->name('reset-password');
+        Route::post('/reset-password-handler',[AdminController::class,'resetPasswordHandler'])->name('reset-password-handler');
     });
 
 

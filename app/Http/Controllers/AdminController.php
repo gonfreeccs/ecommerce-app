@@ -116,4 +116,68 @@ class AdminController extends Controller
             return redirect()->route('adminforgot-password');
         }
     }
+    public function resetPassword(Request $request, $token = null){
+        $check_token = DB::table('password_reset_tokens')
+                          ->where(['token'=>$token,'guard'=>constGuards::ADMIN])
+                          ->first();
+        if ($check_token) {
+            //check if token is not expired
+            $diffMins = Carbon::createFromFormat('Y-m-d H:i:s' , $check_token->created_at)->diffInMinutes
+            (Carbon::now());
+            if ($diffMins > constDefaults::tokenExpiredMinutes) {
+                session()->flash('fail','token expired, request another reset password link');
+                return redirect()->route('adminforgot-password',['token'=>$token]);
+            }else {
+                return view('back.pages.admin.auth.reset-password')->with(['token'=>$token]);
+            }
+        }else{
+            session()->flash('fail','Invalid token,request another to reset the password');
+            return redirect()->route('adminforgot-password',['token'=>$token]);        
+        }
+    }
+    public function resetPasswordHandler(Request $request){
+        $request->validate([
+            'new_password'=>'required|min:5|max:45|required_with:new_password_confirmation|same:new_password_confirmation',
+            'new_password_confirmation'=>'required'
+        ]);
+        $token = DB::table('password_reset_tokens')
+                    ->where(['token'=>$request->token,'guard'=>constGuards::ADMIN])
+                    ->first();
+        //get admin details
+        $admin = Admin::where('email',$token->email)->first();
+        
+        //update admin details
+        Admin::where('email',$admin->email)->update([
+            'password'=>Hash::make($request->new_password)
+        ]);
+
+        //detele token
+        DB::table('password_reset_tokens')->where([
+            'email'=>$admin->email,
+            'token'=>$request->token,
+            'guard'=>constGuards::ADMIN
+        ])->delete();
+
+        // sendEmail to notify admin
+        $data = array(
+            'admin'=>$admin,
+            'new_password'=>$request->new_password
+        );
+        $mail_body = view('email-templates.admin-reset-email-template',$data)->render();
+
+        $mail_config = array(
+            'mail_from_email'=>env('EMAIL_FROM_ADDRESS'),
+            'mail_from_name'=>env('EMAIL_FROM_NAME'),
+            'mail_recipient_email'=>$admin->email,
+            'mail_recipient_name'=>$admin->name,
+            'mail_subject'=>'Password changed',
+            'mail_body'=>$mail_body
+        );
+        sendEmail($mail_config);
+        return redirect()->route('adminlogin')->with('success','Done!, your password has been changed. Use new password
+        to login into the system');
+
+    }
+
 }
+
