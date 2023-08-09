@@ -45,7 +45,7 @@
 		/>
 		<link rel="stylesheet" type="text/css" href="/back/vendors/styles/style.css" />
 		<link rel="stylesheet" href="extra-assets/bootstrap.min.js">
-
+@livewireStyles
 @stack('stylesheets')
 	</head>
 	<body class="login-page">
@@ -106,6 +106,7 @@
 						else{return false;}
 					});
 				</script>
+				@livewireScripts
         @stack('scripts')
 	</body>
 </html>

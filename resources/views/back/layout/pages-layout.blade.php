@@ -61,6 +61,9 @@
 		</script>
 		<!-- End Google Tag Manager -->
 		<link rel="stylesheet" href="extra-assets/bootstrap.min.js">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0- 
+		alpha/css/bootstrap.css" rel="stylesheet">
+		@livewireStyles
         @stack('stylesheets')
 	</head>
 	<body>
@@ -235,80 +238,9 @@
 					</div>
 				</div>
 
+				{{-- <livewire:admin-header-seller-profile-info> --}}
+					@livewire('admin-header-seller-profile-info')
 
-				@if (Auth::guard('admin')->check())
-				
-				<div class="user-info-dropdown">
-					<div class="dropdown">
-						<a
-							class="dropdown-toggle"
-							href="#"
-							role="button"
-							data-toggle="dropdown"
-						>
-							<span class="user-icon">
-								<img src="/back/vendors/images/photo1.jpg" alt="" />
-							</span>
-							<span class="user-name">Ross C. Lopez</span>
-						</a>
-						<div
-							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
-						>
-							<a class="dropdown-item" href="{{route('adminprofile')}}"
-								><i class="dw dw-user1"></i> Profile</a
-							>
-							<a class="dropdown-item" href="profile.html"
-								><i class="dw dw-settings2"></i> Setting</a
-							>
-							<a class="dropdown-item" href="faq.html"
-								><i class="dw dw-help"></i> Help</a
-							>
-							<a class="dropdown-item" href="{{ route('adminlogout_handler')}}"
-								onclick="event.preventDefault();document.getElementById('adminLogoutForm').submit();"><i class="dw dw-logout"></i> Log Out</a
-							>
-
-							<form action="{{ route('adminlogout_handler')}}" id="adminLogoutForm" method="post">
-								@csrf
-							</form>
-						</div>
-					</div>
-				</div>
-					
-				@elseif(Auth::guard('seller')->check())
-				
-				<div class="user-info-dropdown">
-					<div class="dropdown">
-						<a
-							class="dropdown-toggle"
-							href="#"
-							role="button"
-							data-toggle="dropdown"
-						>
-							<span class="user-icon">
-								<img src="/back/vendors/images/photo1.jpg" alt="" />
-							</span>
-							<span class="user-name">Ross C. Lopez</span>
-						</a>
-						<div
-							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
-						>
-							<a class="dropdown-item" href="profile.html"
-								><i class="dw dw-user1"></i> Profile</a
-							>
-							<a class="dropdown-item" href="profile.html"
-								><i class="dw dw-settings2"></i> Setting</a
-							>
-							<a class="dropdown-item" href="faq.html"
-								><i class="dw dw-help"></i> Help</a
-							>
-							<a class="dropdown-item" href="{{ route('admin.logout_handler')}}"
-								><i class="dw dw-logout"></i> Log Out</a
-							>
-						</div>
-					</div>
-				</div>
-					
-				@endif
 
 
 
@@ -535,15 +467,9 @@
 							<div class="sidebar-small-cap">Settings</div>
 						</li>
 						<li>
-							<a
-								href="{{route('adminprofile')}}"
-								target="_blank"
-								class="dropdown-toggle no-arrow"
-							>
+							<a href="{{route('adminprofile')}}" class="dropdown-toggle no-arrow" >
 								<span class="micon fa fa-user"></span>
-								<span class="mtext"
-									>Profile
-									</span>
+								<span class="mtext">Profile</span>
 							</a>
 						</li>
 						@else
@@ -579,6 +505,8 @@
 		<script src="/back/vendors/scripts/script.min.js"></script>
 		<script src="/back/vendors/scripts/process.js"></script>
 		<script src="/back/vendors/scripts/layout-settings.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 		<script>
 			if (navigator.userAgent.indexOf("Firefox") != -1) {
 				history.pushstate(null,null,document.URL);
@@ -599,6 +527,7 @@
 				else{return false;}
 			});
 		</script>
+		@livewireScripts
         @stack('scripts')
 	</body>
 </html>
