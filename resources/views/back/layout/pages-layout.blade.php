@@ -60,6 +60,7 @@
 			})(window, document, "script", "dataLayer", "GTM-NXZMQSS");
 		</script>
 		<!-- End Google Tag Manager -->
+		<link rel="stylesheet" href="extra-assets/bootstrap.min.js">
         @stack('stylesheets')
 	</head>
 	<body>
@@ -253,7 +254,7 @@
 						<div
 							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
 						>
-							<a class="dropdown-item" href="profile.html"
+							<a class="dropdown-item" href="{{route('adminprofile')}}"
 								><i class="dw dw-user1"></i> Profile</a
 							>
 							<a class="dropdown-item" href="profile.html"
@@ -493,7 +494,7 @@
 
 		<div class="left-side-bar">
 			<div class="brand-logo">
-				<a href="index.html">
+				<a href="{{route('adminhome')}}">
 					<img src="/back/vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
 					<img
 						src="/back/vendors/images/deskapp-logo-white.svg"
@@ -508,13 +509,17 @@
 			<div class="menu-block customscroll">
 				<div class="sidebar-menu">
 					<ul id="accordion-menu">
+
+						@if (Route::is('admin*'))
 						<li>
-							<a href="calendar.html" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-calendar4-week"></span
+							<a href="{{route('adminhome')}}" class="dropdown-toggle no-arrow">
+								<span class="micon fa fa-home"></span
 								><span class="mtext">Home</span>
 							</a>
 						</li>		
 						
+
+
 						<li>
 							<a href="invoice.html" class="dropdown-toggle no-arrow">
 								<span class="micon bi bi-receipt-cutoff"></span
@@ -527,35 +532,26 @@
 							<div class="dropdown-divider"></div>
 						</li>
 						<li>
-							<div class="sidebar-small-cap">Extra</div>
-						</li>
-						<li>
-							<a href="javascript:;" class="dropdown-toggle">
-								<span class="micon bi bi-file-pdf"></span
-								><span class="mtext">Documentation</span>
-							</a>
-							<ul class="submenu">
-								<li><a href="introduction.html">Introduction</a></li>
-								<li><a href="getting-started.html">Getting Started</a></li>
-								<li><a href="color-settings.html">Color Settings</a></li>
-								<li>
-									<a href="third-party-plugins.html">Third Party Plugins</a>
-								</li>
-							</ul>
+							<div class="sidebar-small-cap">Settings</div>
 						</li>
 						<li>
 							<a
-								href="https://dropways.github.io/deskapp-free-single-page-website-template/"
+								href="{{route('adminprofile')}}"
 								target="_blank"
 								class="dropdown-toggle no-arrow"
 							>
-								<span class="micon bi bi-layout-text-window-reverse"></span>
+								<span class="micon fa fa-user"></span>
 								<span class="mtext"
-									>Landing Page
-									<img src="/back/vendors/images/coming-soon.png" alt="" width="25"
-								/></span>
+									>Profile
+									</span>
 							</a>
 						</li>
+						@else
+							
+						@endif
+
+
+
 					</ul>
 				</div>
 			</div>
@@ -565,43 +561,7 @@
 		<div class="main-container">
 			<div class="pd-ltr-20 xs-pd-20-10">
 				<div class="min-height-200px">
-					<div class="page-header">
-						<div class="row">
-							<div class="col-md-6 col-sm-12">
-								<div class="title">
-									<h4>blank</h4>
-								</div>
-								<nav aria-label="breadcrumb" role="navigation">
-									<ol class="breadcrumb">
-										<li class="breadcrumb-item">
-											<a href="index.html">Home</a>
-										</li>
-										<li class="breadcrumb-item active" aria-current="page">
-											blank
-										</li>
-									</ol>
-								</nav>
-							</div>
-							<div class="col-md-6 col-sm-12 text-right">
-								<div class="dropdown">
-									<a
-										class="btn btn-primary dropdown-toggle"
-										href="#"
-										role="button"
-										data-toggle="dropdown"
-									>
-										January 2018
-									</a>
-									<div class="dropdown-menu dropdown-menu-right">
-										<a class="dropdown-item" href="#">Export List</a>
-										<a class="dropdown-item" href="#">Policies</a>
-										<a class="dropdown-item" href="#">View Assets</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+					<div class="">
                         @yield('content')
                     </div>
 				</div>
@@ -626,6 +586,18 @@
 					history.pushstate(null,null, document.URL);
 				});
 			}
+		</script>
+		<script src="extra-assets/bootstrap.min.js"></script>
+		<script src="extra-assets/jquery-viewer.min.js"></script>
+		<script>
+			window.addEventListener('showToastr',function(event){
+				toastr.remove();
+				if(event.detail.type === 'info'){ toastr.info(event.detail.message);}
+				else if(event.detail.type === 'success'){ toastr.success(event.detail.message);}
+				else if(event.detail.type === 'error'){ toastr.error(event.detail.message);}
+				else if(event.detail.type === 'warning'){ toastr.warning(event.detail.message);}
+				else{return false;}
+			});
 		</script>
         @stack('scripts')
 	</body>

@@ -48,7 +48,7 @@ class AdminController extends Controller
             return redirect()->route('adminhome');
         }else{
             session()->flash('fail','Incorrect credentials');
-            return redirect()->route('admin.login');
+            return redirect()->route('adminlogin');
         }
     }
 
@@ -177,6 +177,13 @@ class AdminController extends Controller
         return redirect()->route('adminlogin')->with('success','Done!, your password has been changed. Use new password
         to login into the system');
 
+    }
+    public function profileView(Request $request){
+        $admin = null;
+        if (Auth::guard('admin')->check()) {
+            $admin = Admin::findOrFail(auth()->id());
+        }
+        return view('back.pages.admin.profile',compact('admin'));
     }
 
 }

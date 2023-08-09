@@ -44,6 +44,8 @@
 			href="/back/vendors/styles/icon-font.min.css"
 		/>
 		<link rel="stylesheet" type="text/css" href="/back/vendors/styles/style.css" />
+		<link rel="stylesheet" href="extra-assets/bootstrap.min.js">
+
 @stack('stylesheets')
 	</head>
 	<body class="login-page">
@@ -92,6 +94,18 @@
 				});
 			}
 		</script>
+				<script src="extra-assets/bootstrap.min.js"></script>
+				<script src="extra-assets/jquery-viewer.min.js"></script>
+				<script>
+					window.addEventListener('showToastr',function(event){
+						toastr.remove();
+						if(event.detail.type === 'info'){ toastr.info(event.detail.message);}
+						else if(event.detail.type === 'success'){ toastr.success(event.detail.message);}
+						else if(event.detail.type === 'error'){ toastr.error(event.detail.message);}
+						else if(event.detail.type === 'warning'){ toastr.warning(event.detail.message);}
+						else{return false;}
+					});
+				</script>
         @stack('scripts')
 	</body>
 </html>
