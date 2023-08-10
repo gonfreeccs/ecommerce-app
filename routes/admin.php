@@ -12,13 +12,15 @@ Route::prefix('admin')->name('admin')->group(function(){
         Route::post('/send-password-reset-link',[AdminController::class,'sendPasswordResetLink'])->name('send-password-reset-link');
         Route::get('/password/reset/{token}',[AdminController::class,'resetPassword'])->name('reset-password');
         Route::post('/reset-password-handler',[AdminController::class,'resetPasswordHandler'])->name('reset-password-handler');
-    });
+    }); 
 
 
     Route::middleware(['auth:admin','preventBackHistory'])->group(function(){
         Route::view('/home','back.pages.admin.home')->name('home');
         Route::post('/logout_handler',[AdminController::class,'logoutHandler'])->name('logout_handler');
         Route::get('/profile',[AdminController::class,'profileView'])->name('profile');
+        Route::post('/change-profile-picture',[AdminController::class,'changeProfilePicture'])
+        ->name('change-profile-picture');
 
 
     });

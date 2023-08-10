@@ -63,6 +63,7 @@
 		<link rel="stylesheet" href="extra-assets/bootstrap.min.js">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0- 
 		alpha/css/bootstrap.css" rel="stylesheet">
+		<link rel="stylesheet" href="/extra-assets/ijaboCropTool.min.css">
 		@livewireStyles
         @stack('stylesheets')
 	</head>
@@ -244,12 +245,12 @@
 
 
 
-
+{{-- 
 				<div class="github-link">
 					<a href="https://github.com/dropways/deskapp" target="_blank"
 						><img src="/back/vendors/images/github.svg" alt=""
 					/></a>
-				</div>
+				</div> --}}
 			</div>
 		</div>
 		</div>
@@ -507,6 +508,7 @@
 		<script src="/back/vendors/scripts/layout-settings.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+		{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 		<script>
 			if (navigator.userAgent.indexOf("Firefox") != -1) {
 				history.pushstate(null,null,document.URL);
@@ -515,8 +517,9 @@
 				});
 			}
 		</script>
-		<script src="extra-assets/bootstrap.min.js"></script>
-		<script src="extra-assets/jquery-viewer.min.js"></script>
+		<script src="/extra-assets/bootstrap.min.js"></script>
+		<script src="/extra-assets/jquery-viewer.min.js"></script>
+		<script src="/extra-assets/ijaboCropTool.min.js"></script>
 		<script>
 			window.addEventListener('showToastr',function(event){
 				toastr.remove();

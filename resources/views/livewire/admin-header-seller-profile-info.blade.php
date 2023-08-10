@@ -10,7 +10,7 @@
                 data-toggle="dropdown"
             >
                 <span class="user-icon">
-                    <img src="{{$admin->picture}}" alt="" />
+                    <img src="{{url($admin->picture)}}" alt="" />
                 </span>
                 <span class="user-name" value="">{{ $admin->name }}</span>
             </a>

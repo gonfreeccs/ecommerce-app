@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Livewire;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Admin;
 
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 
 class AdminProfileTabs extends Component
 {
@@ -12,6 +13,7 @@ class AdminProfileTabs extends Component
     public $tabname = 'personal_details';
     protected $queryString = ['tab'];
     public $name,$email,$username,$admin_id;
+    public $current_password, $new_password, $new_password_confirmation;
     
     public function selectTab($tab){
         $this-> tab = $tab;
@@ -40,8 +42,38 @@ class AdminProfileTabs extends Component
                     'email'=>$this->email,
                     'username'=>$this->username
                 ]);
+        $this->emit('updateAdminHeaderSellerInfo');
+        $this->dispatchBrowserEvent('updateAdminInfo',[
+            'adminName'=>$this->name,
+            'adminEmail'=>$this->email,
+        ]); 
         $this->showToastr('success','Your personal details have been chaged successfully.');
     }
+
+
+    public function updatePassword(){
+        $this->validate([
+            'current_password'=>[
+                'required' , function($attribute,$value,$fail){
+                    if(Hash::check($value, Admin::find(auth('admin')->id())->password)){
+                        return $fail(__('The currrent password is incorrect'));
+                    }
+                }
+            ],
+            'new_password'=>'required|min:5|max:45|confirmed'
+        ]);
+        $query = Admin::findOrFail(auth('admin')->id())->update([
+            'password'=>Hash::make($this->new_password)
+        ]);
+        if($query){
+            $this->current_password = $this-> new_password = $this-> new_password_confirmation = null;
+            $this->showToastr('success','Password successful changed.');
+        }else{
+            $this->showToastr('error','Something went wrong.');
+        }
+    }
+
+
 
     public function showToastr($type,$message){
         return $this->dispatchBrowserEvent('showToastr',[
@@ -49,6 +81,7 @@ class AdminProfileTabs extends Component
             'message' => $message
         ]);
     }
+
     public function render()
     {
         return view('livewire.admin-profile-tabs');

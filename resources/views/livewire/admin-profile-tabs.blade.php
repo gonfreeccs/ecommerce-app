@@ -52,7 +52,38 @@
                 <!-- Tasks Tab start -->
                 <div class="tab-pane fade {{$tab==='update_password' ? 'active show' : ''}}" id="update_password" role="tabpanel">
                     <div class="pd-20 profile-task-wrap">
-                        ----- Update Password Here -----
+                        <form wire:submit.prevent='updatePassword()'>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Current password</label>
+                                        <input type="password" class="form-control" placeholder="Enter current password" wire:model.defer='current_password'>
+                                        @error('current_password')
+                                            <span class="text-danger">{{$message}}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">New password</label>
+                                    <input type="password" class="form-control" placeholder="Enter new password" wire:model.defer='new_password'>
+                                    @error('new_password')
+                                        <span class="text-danger">{{$message}}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Confirm new password</label>
+                                    <input type="password" class="form-control" placeholder="Enter confirm password" wire:model.defer='new_password_confirmation'>
+                                    @error('new_password_confirmation')
+                                        <span class="text-danger">{{$message}}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update password</button>
+                        </form>
                     </div>
                 </div>
             </div>

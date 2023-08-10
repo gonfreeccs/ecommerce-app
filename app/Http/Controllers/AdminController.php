@@ -1,17 +1,18 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use constGuards;
-use constDefaults;
+
 use App\Models\Admin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
-
+use constGuards;
+use constDefaults;
+use Illuminate\Support\Facades\File;
+use PHPUnit\Framework\Constraint\FileExists;
 
 class AdminController extends Controller
 {
@@ -184,6 +185,28 @@ class AdminController extends Controller
             $admin = Admin::findOrFail(auth()->id());
         }
         return view('back.pages.admin.profile',compact('admin'));
+    }
+    public function changeProfilePicture(Request $request){
+        $admin = Admin::findOrFail(auth()->id());
+        $path = 'images/users/admins/';
+        // $path = 'public/back/src/images/users';
+        $file = $request->file('adminProfilePictureFile');
+        $old_picture = $admin->getAttributes()['picture'];
+        $file_path = $path.$old_picture;
+        $filename = '/ADMIN_IMG'.rand(2,1000).$admin->id.time().uniqid().'.jpg';
+        
+        $upload = $file->move(public_path($path),$filename);
+        if($upload){
+            
+            if($old_picture != null && File::exists(public_path($file_path))){
+                File::delete(public_path($file_path));
+            }
+            $admin->update(['picture'=>$filename]);
+            return response()->json(['status' => 1,'msg'=>'Profile picture has been successfully changed']);
+        }else{
+            return response()->json(['status' => 0,'msg'=>'Something went wrong']);
+        }
+
     }
 
 }
